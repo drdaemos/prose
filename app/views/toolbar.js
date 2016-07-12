@@ -178,7 +178,7 @@ module.exports = Backbone.View.extend({
 
             if (selection) {
               // test if this is a markdown link: [text](link)
-              var link = /\[([^\]]+)\]\(([^)]+)\)/;
+              var link = /\[([^\]]+)\]\((?:{{[\s\S]*}}\/)([^)]+)\)/;
               var quoted = /".*?"/;
 
               var text = selection;
@@ -217,7 +217,7 @@ module.exports = Backbone.View.extend({
             if (self.media && self.media.length) self.renderMedia(self.media);
 
             if (selection) {
-              var image = /\!\[([^\[]*)\]\(([^\)]+)\)/;
+              var image = /\!\[([^\[]*)\]\((?:{{[\s\S]*}}\/)([^\)]+)\)/;
               var src;
               var alt;
 
@@ -380,6 +380,8 @@ module.exports = Backbone.View.extend({
       var title = $('input[name="title"]').val();
 
       if (!text) text = href;
+
+      href = '{{baseurl_lang}}/' + href;
 
       if (title) {
         this.view.editor.replaceSelection('[' + text + '](' + href + ' "' + title + '")');

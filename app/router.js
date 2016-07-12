@@ -133,42 +133,49 @@ module.exports = Backbone.Router.extend({
       this.users.add(user);
     }
 
-    var search = new SearchView({
-      model: user.repos,
-      mode: 'repos'
-    });
+    if (!_.isUndefined(auth.defaultRepo)) {
+      // redirect to repo view
+      this.repo(login, auth.defaultRepo);
 
-    var repos = new ReposView({
-      model: user.repos,
-      search: search
-    });
+    } else {
 
-    var content = new ProfileView({
-      auth: this.user,
-      search: search,
-      sidebar: this.app.sidebar,
-      repos: repos,
-      router: this,
-      user: user
-    });
+      var search = new SearchView({
+        model: user.repos,
+        mode: 'repos'
+      });
 
-    user.fetch({
-      success: (function(model, res, options) {
-        this.view = content;
-        this.app.$el.find('#main').html(this.view.render().el);
+      var repos = new ReposView({
+        model: user.repos,
+        search: search
+      });
 
-        model.repos.fetch({
-          success: repos.render,
-          error: (function(model, xhr, options) {
-            this.error(xhr);
-          }).bind(this),
-          complete: this.app.loader.done
-        });
-      }).bind(this),
-      error: (function(model, xhr, options) {
-        this.error(xhr);
-      }).bind(this)
-    });
+      var content = new ProfileView({
+        auth: this.user,
+        search: search,
+        sidebar: this.app.sidebar,
+        repos: repos,
+        router: this,
+        user: user
+      });
+
+      user.fetch({
+        success: (function(model, res, options) {
+          this.view = content;
+          this.app.$el.find('#main').html(this.view.render().el);
+
+          model.repos.fetch({
+            success: repos.render,
+            error: (function(model, xhr, options) {
+              this.error(xhr);
+            }).bind(this),
+            complete: this.app.loader.done
+          });
+        }).bind(this),
+        error: (function(model, xhr, options) {
+          this.error(xhr);
+        }).bind(this)
+      });
+    }
   },
 
   // #example-user/example-repo
