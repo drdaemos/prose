@@ -24,6 +24,7 @@
         "link": "Insert Link",
         "image": "Insert Image",
         "bold": "Bold",
+        "code": "Code block",
         "italic": "Italic",
         "blockquote": "Blockquote",
         "list": "List",

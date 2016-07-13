@@ -121,6 +121,9 @@ module.exports = Backbone.View.extend({
         case 'quote':
           this.quote(selection);
           break;
+        case 'code':
+          this.code(selection);
+          break;
         case 'list':
           this.list(selection);
           break;
@@ -439,6 +442,14 @@ module.exports = Backbone.View.extend({
       this.view.editor.replaceSelection(s.replace(/\*/g, ''));
     } else {
       this.view.editor.replaceSelection('**' + s.replace(/\*/g, '') + '**');
+    }
+  },
+
+  code: function(s) {
+    if (/^{%\s*highlight/.test(s)) {
+      this.view.editor.replaceSelection(util.lTrim(s.replace(/{%\s*highlight[\s\S]*?%}{%\s*raw\s*%}([\s\S]*?){%\s*endraw\s*%}{%\s*endhighlight\s*%}/g, '$1')));
+    } else {
+      this.view.editor.replaceSelection('{% highlight php %}{% raw %}\n' + s + '\n{% endraw %}{% endhighlight %}');
     }
   },
 
