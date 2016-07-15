@@ -20,7 +20,7 @@ cache:
 before_install:
 - echo -e "Host drdaemos.github.io\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 - openssl aes-256-cbc -K $encrypted_ff1f83cd9717_key -iv $encrypted_ff1f83cd9717_iv
-  -in deploy_key.enc  ~/.ssh/id_rsa -d
+  -in deploy_key.enc -out ~/.ssh/id_rsa -d
 - chmod 600 ~/.ssh/id_rsa
 - chmod +x ./.build_scripts/deploy.sh
 before_script:
