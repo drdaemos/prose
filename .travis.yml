@@ -41,7 +41,7 @@ deploy:
 after_success:
   - |
 
-      declare -r SSH_FILE="$(mktemp -u $HOME/.ssh/XXXXX)"
+      declare -r SSH_FILE="$(mktemp -u $HOME/.ssh/travis_ci)"
 
        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
