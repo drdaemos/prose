@@ -12,8 +12,8 @@ if [ $TRAVIS_PULL_REQUEST = "false" ] && [ $TRAVIS_BRANCH = ${DEPLOY_BRANCH} ]; 
   cp -a img fonts index.html style-rtl.css locale.js oauth.json CNAME site
   cd site
   git init
-  git config user.name "Travis-CI"
-  git config user.email "travis@somewhere.com"
+  git config user.name "Eugene Dementjev"
+  git config user.email "drdaemos@gmail.com"
   git add .
   git commit -m "CI deploy to gh-pages"
   git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:gh-pages
