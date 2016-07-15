@@ -2,6 +2,7 @@ var $ = require('jquery-browserify');
 var _ = require('underscore');
 var templates = require('../dist/templates');
 var chrono = require('chrono');
+var rand = require("random-key");
 
 module.exports = {
 
@@ -76,6 +77,13 @@ module.exports = {
     var regex = /^(---\n)((.|\n)*?)\n---\n?/;
     content = content.replace(/\r\n/g, '\n'); // normalize a little bit
     return regex.test(content);
+  },
+
+  // Generate random identifier
+  // -------
+
+  generateUuid: function(content) {
+    return 'ref_' + rand.generate(8);
   },
 
   // Extract file extension
