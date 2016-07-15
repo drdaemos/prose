@@ -207,6 +207,7 @@ module.exports = Backbone.View.extend({
     var match = {
       lineBreak: /\n/,
       codeBlock: /^{%\s*highlight/,
+      reference: /{%\s*link(?:[\s\S]*?)%}/,
       h1: /^#{1}/,
       h2: /^#{2}/,
       h3: /^#{3}/,
@@ -233,6 +234,9 @@ module.exports = Backbone.View.extend({
         case '{':
           if (match.codeBlock.test(selection)) {
             this.toolbar.highlight('code');
+          }
+          if (match.reference.test(selection)) {
+            this.toolbar.highlight('reference');
           }
           break;
         case '*':
@@ -1226,43 +1230,6 @@ module.exports = Backbone.View.extend({
     store.removeItem(filepath);
   },
 
-  updateFileReferences: function(file) {
-    var oldpath = file.get('oldpath').replace(/^\S+?\//, '');
-    oldpath = oldpath.substr(0, oldpath.lastIndexOf('.'));
-    var newpath = file.get('path').replace(/^\S+?\//, '');
-    newpath = newpath.substr(0, newpath.lastIndexOf('.'));
-    var articles = this.collection.branch.files.where({type: 'file', markdown: true});
-    articles.each(function(item, key) {
-      if (item.get('path') != file.get('oldpath')) {
-        item.getContent({
-          success: (function(model, res, options) {
-            if (model.get('content').indexOf(oldpath) === -1) {
-              return;
-            }
-
-            // perform global string replace without regex
-            model.set('content', model.get('content').split(oldpath).join(newpath));
-            model.set('message', 'Updated links in ' + model.get('name'));
-            var method = model.get('writable') ? model.save : model.patch;
-
-            method.call(this, {
-              success: (function(model, res, options) {
-                console.log('updated ' + model.get('path'));
-              }).bind(this),
-              error: (function(model, xhr, options) {
-                var message = util.xhrErrorMessage(xhr);
-                this.updateSaveState(message, 'error');
-              }).bind(this)
-            });
-          }).bind(this),
-          error: (function(model, xhr, options) {
-            this.router.error(xhr);
-          }).bind(this)
-        });
-      }
-    }, this);
-  },
-
   updateFile: function() {
     var view = this;
 
@@ -1320,10 +1287,6 @@ module.exports = Backbone.View.extend({
         // Remove old file if renamed
         // TODO: remove this when Repo Contents API supports renaming
         if (model.previous('sha') && pathChange) {
-          if (auth.updateFileRefs) {
-            this.updateFileReferences(model);
-          }
-
           url = model.url().replace(path, old).split('?')[0];
 
           data = {

@@ -1,0 +1,23 @@
+<div class='inner clearfix'>
+
+  <div <% if (references) { %>class='col fl'<% } %>>
+    <label><%= t('dialogs.link.title') %></label>
+
+    <input type='text' name='href' placeholder="<%= t('dialogs.link.hrefPlaceholder') %>" readonly />
+    <input type='text' name='id' placeholder="<%= t('dialogs.reference.idPlaceholder') %>" />
+    <input type='text' name='text' placeholder="<%= t('dialogs.link.textPlaceholder') %>" />
+    <a href='#' class='button round insert' data-type='reference'><%= t('dialogs.link.insert') %></a>
+  </div>
+
+  <% if (references) { %>
+    <div class='col col-last fl reference-listing'>
+      <label><%= t('dialogs.media.choose') %></label>
+      <select id="js-reference-listing">
+        <% for (var key in references) { %>
+          <option value="<%= key %>"><%= references[key].title %></option>
+        <% } %>
+      </select>
+      <small class='caption deemphasize'><%= t('dialogs.reference.helpListing') %></small>
+    </div>
+  <% } %>
+</div>

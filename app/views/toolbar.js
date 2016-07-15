@@ -42,6 +42,26 @@ module.exports = Backbone.View.extend({
         });
       }
 
+      if (config.reference) {
+        $.ajax({
+          cache: true,
+          method: 'GET',
+          url: config.reference,
+          success: function(refs) {
+            if (refs instanceof XMLDocument) {
+              var nodes = [].slice.call(refs.children[0].children);
+              self.linksReference = nodes.reduce(function(memo, item, key) {
+                memo[item.tagName] = {
+                  'title': item.getElementsByTagName('title')[0].innerHTML,
+                  'link': item.getElementsByTagName('link')[0].innerHTML,
+                };
+                return memo;
+              }, {});
+            }
+          }
+        });
+      }
+
       if (config.relativeLinks) {
         $.ajax({
           cache: true,
@@ -63,7 +83,7 @@ module.exports = Backbone.View.extend({
       writable: this.file.get('writable'),
       lang: this.file.get('lang'),
       draft: this.file.get('draft'),
-      metadata: this.file.get('metadata')
+      metadata: this.file.get('metadata'),
     };
 
     this.$el.html(_.template(this.template, toolbar, { variable: 'toolbar' }));
@@ -206,6 +226,40 @@ module.exports = Backbone.View.extend({
               if (href) $('input[name=href]', $dialog).val(href);
               if (title) $('input[name=title]', $dialog).val(title);
             }
+          break;
+          case 'reference':
+            tmpl = _(templates.dialogs.reference).template();
+            $dialog.append(tmpl({
+              references: self.linksReference,
+              writable: self.file.get('writable')
+            }));
+
+            if (selection) {
+              var title_re = /["']([\s\S]*)['"]/;
+              var id_re = /(\S+?)(#[\S]*)?\s*%}$/;
+
+              var title = selection.match(title_re);
+              var id = selection.match(id_re);
+
+              if (title && id) {
+                var ref = self.linksReference[id[1]];
+                $('input[name=text]', $dialog).val(title[1]);
+                $('input[name=id]', $dialog).val(id[1]);
+                $('input[name=href]', $dialog).val(ref.link);
+                if (id[2]) {
+                  $('input[name=id]', $dialog).val(id[1]+id[2]);
+                  $('input[name=href]', $dialog).val(ref.link+id[2]);
+                }
+              }
+            }
+            $('#js-reference-listing').prop('selectedIndex', -1);
+            $('#js-reference-listing').chosen();
+            $('#js-reference-listing').on('change', function(event, params) {
+              var ref = self.linksReference[params.selected];
+              $('input[name=text]', $dialog).val(ref.title);
+              $('input[name=href]', $dialog).val(ref.link);
+              $('input[name=id]', $dialog).val(params.selected);
+            });
           break;
           case 'media':
             tmpl = _(templates.dialogs.media).template();
@@ -390,6 +444,25 @@ module.exports = Backbone.View.extend({
         this.view.editor.replaceSelection('[' + text + '](' + href + ' "' + title + '")');
       } else {
         this.view.editor.replaceSelection('[' + text + '](' + href + ')');
+      }
+
+      this.view.editor.focus();
+    }
+
+    if (type === 'reference') {
+      var href = $('input[name="href"]').val();
+      var id = $('input[name="id"]').val();
+      var text = $('input[name="text"]').val();
+
+      if (!id) {
+        this.view.editor.focus();
+        return;
+      }
+
+      if (text) {
+        this.view.editor.replaceSelection('{% link "' + text + '" ' + id + ' %}');
+      } else {
+        this.view.editor.replaceSelection('{% link "' + href + '" ' + id + ' %}');
       }
 
       this.view.editor.focus();

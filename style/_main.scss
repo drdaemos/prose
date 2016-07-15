@@ -1050,6 +1050,12 @@
         }
       .dialog .chzn-container-single .chzn-single div { display:none; }
 
+.dialog.reference {
+  .col {
+    padding: 0 10px;
+  }
+}
+
 .dialog .media-listing {
   padding-left:15px;
   }

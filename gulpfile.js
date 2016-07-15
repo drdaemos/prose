@@ -31,7 +31,7 @@ var paths = {
     'templates/**/*.html'
   ],
   css: [
-    'style/**/*.scss'
+    'style/**/*.scss',
   ]
 };
 

@@ -19,7 +19,8 @@
     "mkdirp": "^0.5.0",
     "papaparse": "^4.1.2",
     "queue-async": "~1.0.3",
-    "underscore": "~1.4.4"
+    "underscore": "~1.4.4",
+    "xml2js": "^0.4.17"
   },
   "keywords": [
     "editor",

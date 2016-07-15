@@ -22,6 +22,7 @@
         "heading": "Heading",
         "subHeading": "Sub Heading",
         "link": "Insert Link",
+        "reference": "Insert Reference",
         "image": "Insert Image",
         "bold": "Bold",
         "code": "Code block",
@@ -182,6 +183,10 @@
             "textPlaceholder": "Link Name",
             "titlePlaceholder": "Title (optional)",
             "insertPlaceholder": "Insert a local link"
+        },
+        "reference": {
+            "idPlaceholder": "Page identifier (can be appended with # anchor)",
+            "helpListing": "You can search here an existing page and reference it with special tag"
         },
         "media": {
             "title": "Insert Image",

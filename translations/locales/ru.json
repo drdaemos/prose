@@ -22,6 +22,7 @@
         "heading": "Заголовок",
         "subHeading": "Подзаголовок",
         "link": "Вставка ссылки",
+        "reference": "Ссылка на статью",
         "image": "Вставка изображения",
         "bold": "Жирный",
         "code": "Блок кода",
@@ -180,6 +181,10 @@
             "textPlaceholder": "Имя ссылки",
             "titlePlaceholder": "Заголовок (можно не указывать)",
             "insertPlaceholder": "Вставить локальную ссылку"
+        },
+        "reference": {
+            "idPlaceholder": "Идентификатор страницы",
+            "helpListing": "You can search here an existing page and reference it with special tag"
         },
         "media": {
             "title": "Вставить изображение",

@@ -10,6 +10,7 @@ require('codemirror/mode/markdown/markdown');
 require('codemirror/mode/ruby/ruby');
 require('codemirror/mode/xml/xml');
 require('codemirror/mode/yaml/yaml');
+require('codemirror/mode/php/php');
 
 // Set locale as global variable
 window.locale.en = en;

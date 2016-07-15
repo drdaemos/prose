@@ -10,5 +10,4 @@ module.exports = {
   username: cookie.get('username'),
   auth: 'oauth',
   defaultRepo: 'xc5-docs',
-  updateFileRefs: false
 };
