@@ -133,9 +133,9 @@ module.exports = Backbone.Router.extend({
       this.users.add(user);
     }
 
-    if (!_.isUndefined(auth.defaultRepo)) {
+    if (!_.isUndefined(auth.defaultRepo) && !_.usUndefined(auth.defaultRepoOwner)) {
       // redirect to repo view
-      this.repo(login, auth.defaultRepo);
+      this.repo(auth.defaultRepoOwner, auth.defaultRepo);
 
     } else {
 
