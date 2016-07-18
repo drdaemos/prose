@@ -6,7 +6,7 @@ echo "Get ready, we're pushing to gh-pages!"
 rm -rf site
 mkdir site
 cp -a dist site
-cp -a img fonts index.html style-rtl.css locale.js oauth.json CNAME site
+cp -a img fonts index.html style-rtl.css locale.js oauth.json site
 cd site
 git init
 git config user.name "Eugene Dementjev"
