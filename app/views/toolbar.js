@@ -519,10 +519,10 @@ module.exports = Backbone.View.extend({
   },
 
   code: function(s) {
-    if (/^{%\s*highlight/.test(s)) {
-      this.view.editor.replaceSelection(util.lTrim(s.replace(/{%\s*highlight[\s\S]*?%}{%\s*raw\s*%}([\s\S]*?){%\s*endraw\s*%}{%\s*endhighlight\s*%}/g, '$1')));
+    if (/^{%\s*raw/.test(s)) {
+      this.view.editor.replaceSelection(util.lTrim(s.replace(/{%\s*raw[\s\S]*?%}```[\S]*\n([\s\S]*?)```{%\s*endraw\s*%}/g, '$1')));
     } else {
-      this.view.editor.replaceSelection('{% highlight php %}{% raw %}\n' + s + '\n{% endraw %}{% endhighlight %}');
+      this.view.editor.replaceSelection('\n{% raw %}```\n' + s + '\n```{% endraw %}\n');
     }
   },
 

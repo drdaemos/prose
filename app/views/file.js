@@ -206,7 +206,7 @@ module.exports = Backbone.View.extend({
 
     var match = {
       lineBreak: /\n/,
-      codeBlock: /^{%\s*highlight/,
+      codeBlock: /^{%\s*raw/,
       reference: /{%\s*link(?:[\s\S]*?)%}/,
       h1: /^#{1}/,
       h2: /^#{2}/,
@@ -483,6 +483,7 @@ module.exports = Backbone.View.extend({
   },
 
   titleAsHeading: function() {
+    return false;
     // If the file is Markdown, has metadata for a title,
     // the editable field in the header should be
     // the title of the Markdown document.
