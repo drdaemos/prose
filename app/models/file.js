@@ -43,7 +43,6 @@ module.exports = Backbone.Model.extend({
     this.set({
       'binary': util.isBinary(path),
       'content': this.isNew() && _.isUndefined(attributes.content) ? t('main.new.body') : attributes.content,
-      'metadata': this.generateDefaultMetadata(),
       'content_url': attributes.url,
       'draft': function() {
         var path = this.get('path');
@@ -59,6 +58,10 @@ module.exports = Backbone.Model.extend({
       'type': type,
       'writable': permissions ? permissions.push : false
     });
+
+    if (this.get('markdown')) {
+      this.set('metadata', this.generateDefaultMetadata());
+    }
   },
 
   get: function(attr) {
