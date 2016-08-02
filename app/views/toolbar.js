@@ -438,8 +438,6 @@ module.exports = Backbone.View.extend({
 
       if (!text) text = href;
 
-      href = '{{baseurl_lang}}/' + href;
-
       if (title) {
         this.view.editor.replaceSelection('[' + text + '](' + href + ' "' + title + '")');
       } else {
@@ -519,10 +517,10 @@ module.exports = Backbone.View.extend({
   },
 
   code: function(s) {
-    if (/^{%\s*raw/.test(s)) {
-      this.view.editor.replaceSelection(util.lTrim(s.replace(/{%\s*raw[\s\S]*?%}```[\S]*\n([\s\S]*?)```{%\s*endraw\s*%}/g, '$1')));
+    if (/^```/.test(s)) {
+      this.view.editor.replaceSelection(util.lTrim(s.replace(/```[\S]*\n([\s\S]*?)```/g, '$1')));
     } else {
-      this.view.editor.replaceSelection('\n{% raw %}```\n' + s + '\n```{% endraw %}\n');
+      this.view.editor.replaceSelection('\n```\n' + s + '\n```\n');
     }
   },
 

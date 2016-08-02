@@ -206,7 +206,7 @@ module.exports = Backbone.View.extend({
 
     var match = {
       lineBreak: /\n/,
-      codeBlock: /^{%\s*raw/,
+      codeBlock: /^```/,
       reference: /{%\s*link(?:[\s\S]*?)%}/,
       h1: /^#{1}/,
       h2: /^#{2}/,
