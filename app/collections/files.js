@@ -136,6 +136,7 @@ module.exports = Backbone.Collection.extend({
 
                 if (value && value.field && value.field.value === "CURRENT_DATETIME") {
                   value.field.value = (new Date()).format('Y-m-d H:i O');
+                  value.field.variable = 'CURRENT_DATETIME';
                 }
               });
             } else if (_.isString(raw)) {

@@ -152,6 +152,23 @@ module.exports = Backbone.Model.extend({
     }));
   },
 
+  updateDate: function() {
+    var defaults = this.get('defaults');
+    var metadata = this.get('metadata') || {};
+
+    var toUpdate = _.filter(defaults, function(item) {
+      return item.field.variable == 'CURRENT_DATETIME';
+    });
+
+    _.each(toUpdate, function(element, index) {
+      metadata[element.name] = element.field.value;
+    });
+
+    if (toUpdate.length > 0) {
+      this.set('metadata', metadata);
+    }
+  },
+
   serialize: function() {
     var metadata = this.get('metadata');
 

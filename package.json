@@ -22,7 +22,7 @@
     "random-key": "^0.3.2",
     "underscore": "~1.4.4",
     "xml2js": "^0.4.17",
-    "randombytes": "git://github.com/drdaemos/randombytes.git#8e4bbd8729783adcf7536a5d466bc3cdcabcae2d"
+    "randombytes": "git://github.com/drdaemos/randombytes.git#d68273649d81820dde1772f33563e7a14d3668de"
   },
   "keywords": [
     "editor",

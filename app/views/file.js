@@ -913,6 +913,7 @@ module.exports = Backbone.View.extend({
     // Update Content.
     if (this.editor && this.editor.getValue) {
       this.model.set('content', this.editor.getValue());
+      this.model.updateDate();
     }
 
     var label = this.model.get('writable') ?
