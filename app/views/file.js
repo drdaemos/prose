@@ -595,6 +595,7 @@ module.exports = Backbone.View.extend({
 
       // Store the configuration object from the collection
       this.config = this.model.get('collection').config;
+      this.config.appendPageRef = this.config.appendPageRef || true;
 
       // initialize the subviews
       if (file.useCSVEditor) {
@@ -1348,6 +1349,15 @@ module.exports = Backbone.View.extend({
     var path = (this.toolbar.mediaDirectoryPath) ?
                     this.toolbar.mediaDirectoryPath :
                     util.extractFilename(this.toolbar.file.attributes.path)[0];
+
+    if (this.toolbar.mediaDirectoryPath && this.config.appendPageRef) {
+      var id = this.model.get('metadata').identifier || '';
+
+      if (id) {
+        path = path + '/' + id;
+      }
+    }
+
     var src = path + '/' + encodeURIComponent(file.name);
 
     this.$el.find('input[name="url"]').val(src);
@@ -1365,6 +1375,14 @@ module.exports = Backbone.View.extend({
     // current directory if no path specified
     var dir = (this.config && this.config.media) ? this.config.media :
       util.extractFilename(this.model.get('path'))[0];
+
+    if (this.config && this.config.media && this.config.appendPageRef) {
+      var id = this.model.get('metadata').identifier || '';
+
+      if (id) {
+        dir = dir + '/' + id;
+      }
+    }
 
     return _.compact([dir, fileName]).join('/');
   },
