@@ -9,6 +9,7 @@ var Papa = require('papaparse');
 
 var ModalView = require('./modal');
 var marked = require('marked');
+var markedPatch = require('../../vendor/marked.patch');
 var diff = require('diff');
 var Backbone = require('backbone');
 var File = require('../models/file');
@@ -36,6 +37,9 @@ module.exports = Backbone.View.extend({
 
     // Patch Liquid
     patch.apply(this);
+
+    // Patch Marked
+    markedPatch.apply(this, [marked]);
 
     this.app = app;
     this.branch = options.branch || options.repo.get('default_branch');
@@ -317,7 +321,46 @@ module.exports = Backbone.View.extend({
       }
     }).bind(this));
 
-    return _.escape(content);
+    // Replace iframes to youtube with video
+    var iframesRe = /<iframe.*src="(?:.*?.*?)".*>.*?<\/iframe>/g;
+    var youtubeRe = /<iframe.*src="(.*?youtube.com.*?)".*>.*?<\/iframe>/;
+    var youtubeIdRe = /(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=))([\w\-]{10,12})\b/;
+    var iframes = content.match(iframesRe);
+
+    _.each(iframes, (function(r) {
+      var parts = (youtubeRe).exec(r);
+
+      var replacement = '[![Video player](http://sacredtherapies.com/wp-content/uploads/2014/06/blank-video-sm.png)](' + parts[1].trim() + ')';
+
+      if (parts !== null && parts.length > 1) {
+        var idParts = (youtubeIdRe).exec(parts[1].trim());
+
+        if (idParts !== null && idParts.length > 1) {
+          // Convert youtube link
+          replacement = '[![Youtube video](http://img.youtube.com/vi/'+ idParts[1] + '/mqdefault.jpg)](http://www.youtube.com/watch?v=' + idParts[1] + ')';
+        }
+      }
+
+      // Blank video
+      content = content.replace(r, replacement);      
+
+    }).bind(this));
+
+    // [![Youtube video](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE "Video Title")
+
+    // Custom liquid plugins
+    var refsRe = /({%\s*link(?:[\s\S]*?)%})/g;    
+    var refRe = /{%\s+link\s+?["|']([\s\S]*?)["|']\s+?(.*)%}/;    
+    var refs = content.match(refsRe);
+
+    _.each(refs, (function(r) {
+      var parts = (refRe).exec(r);
+
+      // TODO: resolve parts[2] for real url.
+      content = content.replace(r, '[' + parts[1].trim() + '](' + parts[2].trim() + ')');
+    }).bind(this));
+
+    return content;
   },
 
   toggleEditor: function() {
