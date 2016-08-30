@@ -97,6 +97,16 @@
         "errorHeading": "Error",
         "confirm": "Got it"
     },
+    "conflict": {
+        "heading": "Version conflict has occured",
+        "message": "Your version of the file is conflicting with the last stored one.",
+        "merge_option": "Click MERGE AND EDIT if you want to merge it automatically and be able to save it again.",
+        "reload_option": "Click RELOAD to reload the page with the latest changes. Be warned that you'll LOSE your changes that way.",
+        "close_option": "If want to handle the situation yourself, simply click CLOSE to hide this dialog.",
+        "reload": "Reload",
+        "merge": "Merge and edit",
+        "close": "Close"
+    },
     "main": {
         "start": {
             "content": "Prose is a content editor for GitHub designed for managing websites.",

@@ -8,9 +8,11 @@ var Handsontable = require('handsontable');
 var Papa = require('papaparse');
 
 var ModalView = require('./modal');
+var ConflictDialogView = require('./conflictdialog');
 var marked = require('marked');
 var markedPatch = require('../../vendor/marked.patch');
 var diff = require('diff');
+var diff3 = require('node-diff3');
 var Backbone = require('backbone');
 var File = require('../models/file');
 var HeaderView = require('./header');
@@ -1369,12 +1371,77 @@ module.exports = Backbone.View.extend({
         }
       }).bind(this),
       error: (function(model, xhr, options) {
-        var message = util.xhrErrorMessage(xhr);
-        this.updateSaveState(message, 'error');
+        _.defer((function(){
+          var message = util.xhrErrorMessage(xhr);
+          this.updateSaveState(message, 'error');
+        }).bind(this));
+
+        // Handle 409 Conflict
+        if (xhr.status == '409' || xhr.statusText == 'Conflict') {
+          view.modal = new ConflictDialogView({
+            onMerge: this.mergeConflict
+          });
+
+          view.$el.find('#modal').html(view.modal.el);
+          view.modal.render();
+        }
       }).bind(this)
     });
 
     return false;
+  },
+
+  mergeConflict: function() {
+    var oldContent = this.model.get('previous');
+    var newContent = this.model.serialize();
+
+    this.app.loader.start();
+
+    this.model.sync('read', this.model, {
+      cache: false, 
+      dataType: 'text',
+      headers: {
+        'Accept': 'application/vnd.github.v3.raw'
+      },
+      success: (function(response, status, xhr) {
+        var gitContent = response;
+
+        _.defer((function() {
+          var merge = diff3.diff.diff3Merge(gitContent, oldContent, newContent);
+
+          var mergedContent = _.map(merge, function(region) {
+            if (_.has(region, 'ok')) {
+              return region.ok.join('');
+            } else if (_.has(region, 'conflict')) {
+              return region.conflict.b;
+            }
+          }).join('');
+
+          Backbone.Model.prototype.fetch.call(this.model, {
+            success: (function() {
+              this.updateEditorAndMetadata(mergedContent);
+            }).bind(this)
+          });
+
+        }).bind(this));
+      }).bind(this)
+    });
+  },
+
+  updateEditorAndMetadata: function(mergedContent) {
+    this.dirty = false;
+    this.clearStashForPath(this.absoluteFilepath());
+    this.edit();
+
+    var fileModel = this.model.parseContent(mergedContent);
+
+    this.editor.setValue(fileModel.content);
+    this.model.set('metadata', fileModel.metadata);
+
+    _.defer((function(){
+      this.refreshCodeMirror();
+      this.app.loader.done();
+    }).bind(this));
   },
 
   updateSaveState: function(label, classes, kill) {

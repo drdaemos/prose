@@ -50,7 +50,7 @@ module.exports = Backbone.View.extend({
       el.setAttribute('data-name', name);
     }, {
       mode: id,
-      value: textElement.value,
+      value: textElement ? textElement.value : '',
       lineWrapping: true,
       theme: 'prose-bright'
     });

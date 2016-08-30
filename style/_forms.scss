@@ -1,0 +1,15 @@
+.buttons-list {
+    .button, button {
+        display: inline-block;
+    }
+}
+
+.modal-footer {
+    .buttons-list {
+        text-align: right;
+
+        & > * + * {
+            margin-left: 10px;
+        }
+    }
+}

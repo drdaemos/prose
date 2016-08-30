@@ -1,0 +1,16 @@
+<div class='modal-content round'>
+  <div class='modal-heading inner'>
+    <%= t('conflict.heading') %>
+  </div>
+  <div class='prose inner'>
+    <p><%= t('conflict.message') %></p>
+    <p><%= t('conflict.merge_option') %></p>
+    <p><%= t('conflict.reload_option') %></p>
+    <p><%= t('conflict.close_option') %></p>
+  </div>
+  <div class='modal-footer inner buttons-list'>
+    <a href='#' class='button round got-it'><%= t('conflict.close') %></a>
+    <a href='#' class='button major round reload'><%= t('conflict.reload') %></a>
+    <a href='#' class='button good round merge'><%= t('conflict.merge') %></a>
+  </div>
+</div>

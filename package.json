@@ -22,7 +22,8 @@
     "random-key": "^0.3.2",
     "underscore": "~1.4.4",
     "xml2js": "^0.4.17",
-    "randombytes": "git://github.com/drdaemos/randombytes.git#d68273649d81820dde1772f33563e7a14d3668de"
+    "randombytes": "git://github.com/drdaemos/randombytes.git#d68273649d81820dde1772f33563e7a14d3668de",
+    "node-diff3": "git://github.com/tonyg/node-diff3.git#42c0a9e68a971faf7e630cf0f1522a025f01166d"
   },
   "keywords": [
     "editor",
