@@ -12,6 +12,9 @@ module.exports = Backbone.View.extend({
   type: 'textarea',
 
   initialize: function(options) {
+    this.options = {
+      data: options.data
+    };
     this.id = options.data.id;
     this.name = options.data.name;
   },

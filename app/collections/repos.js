@@ -12,13 +12,15 @@ module.exports = Backbone.Collection.extend({
   model: Repo,
 
   initialize: function(models, options) {
-    _.bindAll(this);
+    // _.bindAll(this);
 
     this.user = options.user;
 
-    this.comparator = function(repo) {
-      return -(new Date(repo.get('updated_at')).getTime());
-    };
+    // this.comparator = 
+  },
+
+  comparator: function(repo) {
+    return -(new Date(repo.get('updated_at')).getTime());
   },
 
   fetch: function(options) {

@@ -31,14 +31,14 @@ module.exports = Backbone.View.extend({
     this.subviews['header'] = header;
 
     if (this.auth) {
-      var orgs = this.sidebar.initSubview('orgs', {
-        model: this.auth.orgs,
-        router: this.router,
-        sidebar: this.sidebar,
-        user: this.user
-      });
+      // var orgs = this.sidebar.initSubview('orgs', {
+      //   model: this.auth.orgs,
+      //   router: this.router,
+      //   sidebar: this.sidebar,
+      //   user: this.user
+      // });
       
-      this.subviews['orgs'] = orgs;
+      // this.subviews['orgs'] = orgs;
     }
 
     return this;

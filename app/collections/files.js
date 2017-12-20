@@ -44,40 +44,42 @@ module.exports = Backbone.Collection.extend({
   },
 
   initialize: function(models, options) {
-    _.bindAll(this);
+    // _.bindAll(this);
 
     this.repo = options.repo;
     this.branch = options.branch;
     this.sha = options.sha;
 
-    // Sort files reverse alphabetically if path begins with '_posts/'
-    this.comparator = function(a, b) {
-      var typeA = a.get('type');
-      var typeB = b.get('type');
+    // this.comparator = 
+  },
 
-      var pathA = a.get('path');
-      var pathB = b.get('path');
+  // Sort files reverse alphabetically if path begins with '_posts/'
+  comparator: function(a, b) {
+    var typeA = a.get('type');
+    var typeB = b.get('type');
 
-      var regex = /^_posts\/.*$/
+    var pathA = a.get('path');
+    var pathB = b.get('path');
 
-      if (typeA === typeB && typeA === 'file' && regex.test(pathA) && regex.test(pathB)) {
-        // Reverse alphabetical
-        return pathA < pathB ? 1 : -1;
-      } else if (typeA === typeB) {
-        // Alphabetical
-        return pathA < pathB ? -1 : 1;
-      } else {
-        switch(typeA) {
-          case 'tree':
-          case 'folder':
-            return -1;
-            break;
-          case 'file':
-            return typeB === 'folder' || typeB === 'tree' ? 1 : -1;
-            break;
-        }
+    var regex = /^_posts\/.*$/
+
+    if (typeA === typeB && typeA === 'file' && regex.test(pathA) && regex.test(pathB)) {
+      // Reverse alphabetical
+      return pathA < pathB ? 1 : -1;
+    } else if (typeA === typeB) {
+      // Alphabetical
+      return pathA < pathB ? -1 : 1;
+    } else {
+      switch(typeA) {
+        case 'tree':
+        case 'folder':
+          return -1;
+          break;
+        case 'file':
+          return typeB === 'folder' || typeB === 'tree' ? 1 : -1;
+          break;
       }
-    };
+    }
   },
 
   parse: function(resp, options) {

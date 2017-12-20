@@ -12,6 +12,9 @@ module.exports = Backbone.View.extend({
   },
 
   initialize: function(options) {
+    this.options = {
+      data: options.data
+    };
     this.name = options.data.name;
     this.on = options.data.field.on;
     this.off = options.data.field.off;

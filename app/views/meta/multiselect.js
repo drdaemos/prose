@@ -9,6 +9,9 @@ module.exports = Backbone.View.extend({
   type: 'multiselect',
 
   initialize: function(options) {
+    this.options = {
+      data: options.data
+    };
     this.name = options.data.name;
   },
 

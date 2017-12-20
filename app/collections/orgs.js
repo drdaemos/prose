@@ -9,7 +9,7 @@ module.exports = Backbone.Collection.extend({
 
   initialize: function(models, options) {
     options = _.clone(options) || {};
-    _.bindAll(this);
+    // _.bindAll(this);
 
     this.user = options.user;
   },

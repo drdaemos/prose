@@ -9,6 +9,9 @@ module.exports = Backbone.View.extend({
   type: 'checkbox',
 
   initialize: function(options) {
+    this.options = {
+      data: options.data
+    };
     this.name = options.data.name;
   },
 

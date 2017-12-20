@@ -9,6 +9,6 @@ module.exports = {
   url: oauth.gatekeeperUrl,
   username: cookie.get('username'),
   auth: 'oauth',
-  // defaultRepo: 'xc5-docs',
+  defaultRepo: 'xcart-docs',
   defaultRepoOwner: 'xcart',
 };
