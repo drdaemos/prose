@@ -1,4 +1,4 @@
-var $ = require('jquery-browserify');
+var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
 var templates = require('../../dist/templates');
@@ -50,9 +50,9 @@ module.exports = Backbone.View.extend({
   },
 
   search: function() {
-    var searchstr = this.input ? this.input.val() : '';
+    var searchstr = this.input ? this.input.val().toLowerCase() : '';
     return this.model.filter(function(model) {
-      return model.get('name').indexOf(searchstr) > -1;
+      return model.get('name').toLowerCase().indexOf(searchstr) > -1;
     });
   }
 });

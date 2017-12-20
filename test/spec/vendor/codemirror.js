@@ -1,5 +1,5 @@
 var CodeMirror = require('codemirror');
-var $ = require('jquery-browserify');
+var $ = require('jquery');
 var View = require('backbone').View;
 
 // Useful for us to know what parts of the CodeMirror API we use,

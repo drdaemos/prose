@@ -1,4 +1,4 @@
-var $ = require('jquery-browserify');
+var $ = require('jquery');
 var Backbone = require('backbone');
 var _ = require('underscore');
 var templates = require('../../../dist/templates');

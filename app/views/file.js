@@ -1,5 +1,5 @@
 var CodeMirror = require('codemirror');
-var $ = require('jquery-browserify');
+var $ = require('jquery');
 var _ = require('underscore');
 var queue = require('queue-async');
 var jsyaml = require('js-yaml');
@@ -986,7 +986,7 @@ module.exports = Backbone.View.extend({
     var text1 = this.model.isNew() ? '' : _.escape(this.model.get('previous'));
     var text2 = _.escape(this.model.serialize());
 
-    var d = diff.diffWords(text1, text2);
+    var d = diff.diffLines(text1, text2);
     var length = d.length;
     var compare = '';
 
@@ -1339,7 +1339,7 @@ module.exports = Backbone.View.extend({
 
           data = {
             path: old,
-            message: t('actions.commits.deleted', { filename: name }),
+            message: t('actions.commits.delete', { filename: name }),
             sha: model.previous('sha'),
             branch: this.collection.branch.get('name')
           };

@@ -1,8 +1,8 @@
-var $ = require('jquery-browserify');
+var $ = require('jquery');
 var _ = require('underscore');
 var templates = require('../dist/templates');
 var chrono = require('chrono');
-var rand = require("random-key");
+var rand = require('uuid-base62');
 
 module.exports = {
 
@@ -83,7 +83,7 @@ module.exports = {
   // -------
 
   generateUuid: function(content) {
-    return 'ref_' + rand.generate(8);
+    return 'ref_' + rand.v4().slice(0, 8);
   },
 
   // Extract file extension

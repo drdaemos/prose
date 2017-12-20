@@ -1,5 +1,5 @@
 var CodeMirror = require('codemirror');
-var $ = require('jquery-browserify');
+var $ = require('jquery');
 var Backbone = require('backbone');
 var _ = require('underscore');
 var jsyaml = require('js-yaml');
@@ -69,12 +69,19 @@ module.exports = Backbone.View.extend({
   },
 
   getValue: function() {
+
+    // JS-yaml treats colons as delineating a key-value pair.
+    // This is great for the raw editor but unexpected behavior
+    // for the textarea field, which should behave as a longer
+    // text field. Pre-escape colons here so they can be used.
+    // https://github.com/prose/prose/issues/965
     try {
-      var value = jsyaml.safeLoad(this.codeMirror.getValue());
-      return (value || value === 0) ? value : '';
+      var value = jsyaml.safeLoad(this.codeMirror.getValue().replace(/:/g, '&58;'));
+      if (value === 0) { return value; }
+      else return value ? value.replace(/&58;/g, ':') : '';
     }
     catch(err) {
-      console.log('Error parsing yaml front matter for ', this.name);
+      console.log('Error parsing yaml front matter for', this.name);
       console.log(err);
       return '';
     }
@@ -83,7 +90,7 @@ module.exports = Backbone.View.extend({
   setValue: function(value) {
     // Only set value if not null or undefined.
     if (value != undefined) {
-      this.codeMirror.setValue(value);
+      this.codeMirror.setValue(value.replace(/&58;/g, ':'));
     }
   }
 });

@@ -1,4 +1,4 @@
-var $ = require('jquery-browserify');
+var $ = require('jquery');
 var Backbone = require('backbone');
 var _ = require('underscore');
 var templates = require('../../../dist/templates');
@@ -20,6 +20,7 @@ module.exports = Backbone.View.extend({
       help: data.field.help,
       placeholder: data.field.placeholder,
       options: data.field.options,
+      value: data.field.value,
       lang: data.lang
     };
 

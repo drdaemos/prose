@@ -1,4 +1,4 @@
-var $ = require('jquery-browserify');
+var $ = require('jquery');
 var Backbone = require('backbone');
 var _ = require('underscore');
 var templates = require('../../../dist/templates');
@@ -25,6 +25,14 @@ module.exports = Backbone.View.extend({
       options: data.field.options,
       lang: data.lang
     };
+
+    if (Array.isArray(data.field.value)) {
+      multiselect.value = data.field.value;
+    } else if (typeof data.field.value !== 'undefined' && typeof data.field.value !== 'object') {
+      multiselect.value = [data.field.value];
+    } else {
+      multiselect.value = [];
+    }
 
     this.setElement($(_.template(this.template, multiselect, {
       variable: 'meta'

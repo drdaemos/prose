@@ -1,5 +1,5 @@
-var $ = require('jquery-browserify');
-var chosen = require('chosen-jquery-browserify');
+var $ = require('jquery');
+var chosen = require('chosen-js');
 var _ = require('underscore');
 var Backbone = require('backbone');
 var BranchView = require('./branch');

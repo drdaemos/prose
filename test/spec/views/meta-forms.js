@@ -1,6 +1,6 @@
-var $ = require('jquery-browserify');
+var $ = require('jquery');
 var _ = require('underscore');
-var chosen = require('chosen-jquery-browserify');
+var chosen = require('chosen-js');
 
 var Checkbox = require('../../../app/views/meta/checkbox');
 var TextForm = require('../../../app/views/meta/text');
@@ -71,6 +71,16 @@ describe('Metadata form elements', function() {
       textarea.setValue(value);
       expect(textarea.getValue()).to.equal(value);
     });
+
+    it('does not treat colons as key-value fields', function() {
+      var value = 'ok: this: that:';
+      data.field.value = value;
+      data.id = 'baz';
+      var textarea = new TextArea({data: data});
+      $('#meta').append(textarea.render());
+      textarea.initCodeMirror(function() {});
+      expect(textarea.getValue()).to.equal(value);
+    })
 
     it('reads values from a number element', function() {
       data.type = 'number';
@@ -225,5 +235,31 @@ describe('Metadata form elements', function() {
       expect($('.chzn-choices').find('li.search-choice').length).to.equal(3);
       expect($('.chzn-choices').find('li.search-choice').eq(2).find('span').text()).to.equal('dyke');
     });
+  });
+
+  it('sets default values on select elements', function () {
+    data.field.options = [
+      'foo',
+      'bar',
+      {name: 'baz', value: 'baz'}
+    ];
+    data.field.value = 'bar';
+    var select = new Select({ data: data });
+    $('#meta').append(select.render());
+    $('.chzn-select').chosen();
+    expect(select.getValue()).to.equal('bar');
+  });
+
+  it('sets default values on multiselect elements', function () {
+    data.field.options = [
+      'foo',
+      'bar',
+      {name: 'baz', value: 'baz'}
+    ];
+    data.field.value = 'bar';
+    var multiselect = new Multiselect({ data: data });
+    $('#meta').append(multiselect.render());
+    $('.chzn-select').chosen();
+    expect(multiselect.getValue()).to.deep.equal(['bar']);
   });
 });

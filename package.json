@@ -1,29 +1,29 @@
 {
   "name": "prose",
-  "version": "1.1.22",
+  "version": "1.1.23",
   "description": "[Prose](http://prose.io) is a web-based interface for managing text-based content in your GitHub repositories. Use it to create, edit, and delete files, and save your changes directly to GitHub.",
   "dependencies": {
-    "backbone": "~1.0.0",
-    "chosen-jquery-browserify": "~0.9.15",
+    "backbone": "^1.3.3",
+    "chosen-js": "^1.8.2",
     "chrono": "~1.0.4",
     "codemirror": "^5.13.2",
     "deepmerge": "~0.2.7",
-    "diff": "~1.0.4",
+    "diff": "~2.2.0",
     "handsontable": "git://github.com/handsontable/handsontable.git#0.20.2",
     "ignore": "~2.2.7",
-    "jquery-browserify": "~1.8.1",
+    "jquery": "^2.2.4",
     "js-base64": "~2.1.1",
     "js-yaml": "^3.6.1",
     "keymaster": "git://github.com/madrobby/keymaster.git#0f09fc1b7e66c2b7e07afe89a419366dcf2d1cd8",
     "marked": "~0.2.8",
     "mkdirp": "^0.5.0",
+    "node-diff3": "git://github.com/tonyg/node-diff3.git#42c0a9e68a971faf7e630cf0f1522a025f01166d",
     "papaparse": "^4.1.2",
     "queue-async": "~1.0.3",
-    "random-key": "^0.3.2",
-    "underscore": "~1.4.4",
-    "xml2js": "^0.4.17",
     "randombytes": "git://github.com/drdaemos/randombytes.git#d68273649d81820dde1772f33563e7a14d3668de",
-    "node-diff3": "git://github.com/tonyg/node-diff3.git#42c0a9e68a971faf7e630cf0f1522a025f01166d"
+    "underscore": "~1.4.4",
+    "uuid-base62": "^0.1.0",
+    "xml2js": "^0.4.17"
   },
   "keywords": [
     "editor",
@@ -61,7 +61,8 @@
     "test": "gulp test",
     "test-ci": "gulp test-ci",
     "start": "gulp watch & serve",
-    "build": "gulp clean; gulp production"
+    "build": "gulp clean; gulp production",
+    "translations": "gulp translations"
   },
   "browserify": {
     "transform": [

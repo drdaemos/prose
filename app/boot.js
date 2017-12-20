@@ -12,15 +12,17 @@ require('codemirror/mode/xml/xml');
 require('codemirror/mode/yaml/yaml');
 require('codemirror/mode/php/php');
 
+var $ = require('jquery');
+var _ = require('underscore');
+var Backbone = require('backbone');
+
 // Set locale as global variable
 window.locale.en = en;
 window.locale.current('en');
 window.app = {};
 window.Backbone = Backbone;
-
-var $ = require('jquery-browserify');
-var _ = require('underscore');
-var Backbone = require('backbone');
+window.jQuery = $;
+window.$ = $;
 
 Backbone.$ = $;
 

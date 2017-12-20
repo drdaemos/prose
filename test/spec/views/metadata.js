@@ -3,7 +3,7 @@ var mockFile = require('../../mocks/models/file');
 var mockFileView = require('../../mocks/views/file');
 
 var templates = require('../../../dist/templates');
-var $ = require('jquery-browserify');
+var $ = require('jquery');
 var _ = require('underscore');
 var jsyaml = require('js-yaml');
 
