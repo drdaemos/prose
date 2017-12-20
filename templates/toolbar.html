@@ -70,7 +70,18 @@
   </ul>
   <ul class='group round clearfix'>
     <li>
-    <a class='round' title="<%= t('toolbar.help') %>" href='#' data-key='help' data-snippet=false data-dialog=true>
+    <% if (toolbar.invisiblesShown) { %>
+      <a class='invisibles-flag active round' title="<%= t('toolbar.invisibles-hide') %>" href='#' data-state='false'>
+        <i class="fas fa-paragraph"></i>
+      </a>
+    <% } else { %>
+      <a class='invisibles-flag round' title="<%= t('toolbar.invisibles-show') %>" href='#' data-state='true'>
+        <i class="fas fa-paragraph"></i>
+      </a>
+    <% } %>
+    </li>
+    <li>
+      <a class='round' title="<%= t('toolbar.help') %>" href='#' data-key='help' data-snippet=false data-dialog=true>
         <span class='ico small question'></span>
       </a>
     </li>

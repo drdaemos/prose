@@ -30,6 +30,8 @@
         "blockquote": "Blockquote",
         "list": "List",
         "numberedlist": "Numbered List",
+        "invisibles-show": "Show invisible characters",
+        "invisibles-hide": "Hide invisible characters",
         "help": "Help"
     },
     "heading": {

@@ -30,6 +30,8 @@
         "blockquote": "Цитата",
         "list": "Список",
         "numberedlist": "Нумерованный список",
+        "invisibles-show": "Показать невидимые символы",
+        "invisibles-hide": "Скрыть невидимые символы",
         "help": "Помощь"
     },
     "heading": {

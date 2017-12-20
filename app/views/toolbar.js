@@ -13,6 +13,7 @@ module.exports = Backbone.View.extend({
   events: {
     'click .group a': 'markdownSnippet',
     'click .publish-flag': 'togglePublishing',
+    'click .invisibles-flag': 'toggleInvisibles',
     'change #upload': 'fileInput',
     'click .dialog .insert': 'dialogInsert',
     'click .draft-to-post': 'post'
@@ -23,6 +24,8 @@ module.exports = Backbone.View.extend({
     this.file = options.file;
     this.view = options.view;
     this.collection = options.collection;
+
+    this.invisiblesShown = false;
     var config = options.config;
 
     if (config) {
@@ -84,6 +87,7 @@ module.exports = Backbone.View.extend({
       lang: this.file.get('lang'),
       draft: this.file.get('draft'),
       metadata: this.file.get('metadata'),
+      invisiblesShown: this.invisiblesShown
     };
 
     this.$el.html(_.template(this.template, toolbar, { variable: 'toolbar' }));
@@ -369,6 +373,20 @@ module.exports = Backbone.View.extend({
       $publishKey.html(t('actions.publishing.unpublished') +
                       '<span class="ico small checkmark"></span>');
     }
+  },
+
+  toggleInvisibles: function(e) {
+    var $target = $(e.currentTarget);
+
+    if ($target.data('state') === true) {
+      this.view.editor.setOption('showInvisibles', true);
+    } else {
+      this.view.editor.setOption('showInvisibles', false);
+    }
+
+    this.invisiblesShown = $target.data('state');
+    this.render();
+    return false;
   },
 
   togglePublishing: function(e) {

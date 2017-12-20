@@ -6,6 +6,7 @@
     "backbone": "^1.3.3",
     "chosen-js": "^1.8.2",
     "chrono": "~1.0.4",
+    "cm-show-invisibles": "^2.0.2",
     "codemirror": "^5.13.2",
     "deepmerge": "~0.2.7",
     "diff": "~2.2.0",

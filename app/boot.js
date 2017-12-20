@@ -11,6 +11,7 @@ require('codemirror/mode/ruby/ruby');
 require('codemirror/mode/xml/xml');
 require('codemirror/mode/yaml/yaml');
 require('codemirror/mode/php/php');
+require('cm-show-invisibles');
 
 var $ = require('jquery');
 var _ = require('underscore');

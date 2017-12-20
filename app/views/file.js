@@ -435,7 +435,8 @@ module.exports = Backbone.View.extend({
       extraKeys: this.keyMap(),
       matchBrackets: true,
       dragDrop: false,
-      theme: 'prose-bright'
+      theme: 'prose-bright',
+      showInvisibles: false
     });
 
     // Bind Drag and Drop work on the editor

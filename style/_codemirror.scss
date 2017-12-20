@@ -68,6 +68,15 @@
 
 /* Prose Bright Theme
  -------------------- */
+.cm-s-prose-bright .cm-whitespace::before {
+  color: rgba(64, 79, 125, .35);
+} 
+
+.cm-s-prose-bright .CodeMirror-code > div > pre > span::after,
+.cm-s-prose-bright .CodeMirror-line > span::after {
+  color: rgba(64, 79, 125, .35);
+} 
+
 /* Dark Grey */
 .cm-s-prose-bright                    { color:#3D494E; }
 .cm-s-prose-bright span.cm-header     { color:#3D494E; font-weight:bold;}
