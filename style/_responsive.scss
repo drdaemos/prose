@@ -272,10 +272,10 @@ only screen and (-webkit-min-device-pixel-ratio:2),
 only screen and (min-device-pixel-ratio:2) {
 
   .icon,
-  .chzn-container-single .chzn-single abbr,
-  .chzn-container-single .chzn-single div b,
-  .chzn-container .chzn-results-scroll-down span,
-  .chzn-container-multi .chzn-choices .search-choice .search-choice-close {
+  .chosen-container-single .chosen-single abbr,
+  .chosen-container-single .chosen-single div b,
+  .chosen-container .chosen-results-scroll-down span,
+  .chosen-container-multi .chosen-choices .search-choice .search-choice-close {
     background-image:url('../img/sprite@2x.png');
     background-size:400px 150px;
     }

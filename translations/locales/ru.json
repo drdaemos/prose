@@ -16,7 +16,8 @@
         "about": "О проекте",
         "develop": "Разработчики",
         "logout": "Выйти",
-        "language": "Язык"
+        "language": "Язык",
+        "goback": "Вернуться"
     },
     "toolbar": {
         "heading": "Заголовок",

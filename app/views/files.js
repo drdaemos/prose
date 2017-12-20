@@ -183,6 +183,7 @@ module.exports = Backbone.View.extend({
     var target = e.currentTarget;
     var path = target.href.split('#')[1];
     var match = path.match(/^\w+?\/\w+?\/tree\/([^\/]*)\/?(.*)$/);
+    this.search.clear();
 
     if (e && match) {
       e.preventDefault();

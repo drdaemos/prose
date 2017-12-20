@@ -1,11 +1,11 @@
 var $ = require('jquery');
-var chosen = require('chosen-js');
 var _ = require('underscore');
 var util = require('../util');
 var Backbone = require('backbone');
 var toolbar = require('../toolbar/markdown.js');
 var upload = require('../upload');
 var templates = require('../../dist/templates');
+var select2 = require('select2')();
 
 module.exports = Backbone.View.extend({
   template: templates.toolbar,
@@ -45,25 +45,25 @@ module.exports = Backbone.View.extend({
         });
       }
 
-      if (config.reference) {
-        $.ajax({
-          cache: true,
-          method: 'GET',
-          url: config.reference,
-          success: function(refs) {
-            if (refs instanceof XMLDocument) {
-              var nodes = [].slice.call(refs.children[0].children);
-              self.linksReference = nodes.reduce(function(memo, item, key) {
-                memo[item.tagName] = {
-                  'title': item.getElementsByTagName('title')[0].innerHTML,
-                  'link': item.getElementsByTagName('link')[0].innerHTML,
-                };
-                return memo;
-              }, {});
-            }
-          }
-        });
-      }
+      // if (config.reference) {
+      //   $.ajax({
+      //     cache: true,
+      //     method: 'GET',
+      //     url: config.reference,
+      //     success: function(refs) {
+      //       if (refs instanceof XMLDocument) {
+      //         var nodes = [].slice.call(refs.children[0].children);
+      //         self.linksReference = nodes.reduce(function(memo, item, key) {
+      //           memo[item.tagName] = {
+      //             'title': item.getElementsByTagName('title')[0].innerHTML,
+      //             'link': item.getElementsByTagName('link')[0].innerHTML,
+      //           };
+      //           return memo;
+      //         }, {});
+      //       }
+      //     }
+      //   });
+      // }
 
       if (config.relativeLinks) {
         $.ajax({
@@ -194,8 +194,8 @@ module.exports = Backbone.View.extend({
             }));
 
             if (self.relativeLinks) {
-              $('.chzn-select', $dialog).chosen().change(function() {
-                $('.chzn-single span').text('Insert a local link.');
+              $('.chzn-select', $dialog).select2().change(function() {
+                // $('.chosen-single span').text('Insert a local link.');
 
                 var parts = $(this).val().split(',');
                 $('input[name=href]', $dialog).val(parts[0]);
@@ -257,7 +257,7 @@ module.exports = Backbone.View.extend({
               }
             }
             $('#js-reference-listing').prop('selectedIndex', -1);
-            $('#js-reference-listing').chosen();
+            $('#js-reference-listing').select2();
             $('#js-reference-listing').on('change', function(event, params) {
               var ref = self.linksReference[params.selected];
               $('input[name=text]', $dialog).val(ref.title);

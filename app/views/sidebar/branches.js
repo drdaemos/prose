@@ -1,5 +1,5 @@
 var $ = require('jquery');
-var chosen = require('chosen-js');
+var select2 = require('select2')();
 var _ = require('underscore');
 var Backbone = require('backbone');
 var BranchView = require('./branch');
@@ -55,7 +55,7 @@ module.exports = Backbone.View.extend({
     this.$el.find('select').html(frag);
 
     var router = this.router;
-    this.$el.find('.chzn-select').chosen().change(function() {
+    this.$el.find('.chzn-select').select2().change(function() {
       router.navigate($(this).val(), true);
     });
 

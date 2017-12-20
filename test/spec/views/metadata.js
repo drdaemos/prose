@@ -92,7 +92,7 @@ describe('Metadata editor view', function() {
       }]);
       metadataEditor.render();
       expect($('#meta').find('label[for="select"]').text()).to.equal('select label');
-      expect($('#meta').find('ul.chzn-results').find('li').length).to.equal(3);
+      expect($('#meta').find('ul.chosen-results').find('li').length).to.equal(3);
     });
 
     it('creates a multiselect element with correct label and options', function() {
@@ -109,7 +109,7 @@ describe('Metadata editor view', function() {
       }]);
       metadataEditor.render();
       expect($('#meta').find('label[for="multiselect"]').text()).to.equal('multiselect label');
-      expect($('#meta').find('ul.chzn-results').find('li').length).to.equal(2);
+      expect($('#meta').find('ul.chosen-results').find('li').length).to.equal(2);
     });
 
     it('creates a checkbox element with default value and label', function() {

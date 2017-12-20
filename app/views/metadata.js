@@ -1,6 +1,6 @@
 var CodeMirror = require('codemirror');
 var $ = require('jquery');
-var chosen = require('chosen-js');
+var select2 = require('select2')();
 var _ = require('underscore');
 _.merge = require('deepmerge');
 var jsyaml = require('js-yaml');
@@ -168,8 +168,7 @@ module.exports = Backbone.View.extend({
       }
     }).bind(this));
 
-    // Attach a change event listener
-    this.$el.find('.chzn-select').chosen().change(this.updateModel);
+    this.renderSelect();
 
     // Renders the raw metadata textarea form
     this.renderRawEditor();
@@ -202,6 +201,16 @@ module.exports = Backbone.View.extend({
     };
   },
 
+  renderSelect: function() {
+    var select = this.$el.find('.chzn-select');
+    // Attach a change event listener
+    select.select2({
+      tags: true,
+      width: '90%'
+    });
+    select.on('change', this.updateModel.bind(this));
+  },
+
   // Responsible for rendering the raw metadata element
   // and listening for changes.
   renderRawEditor: function() {
@@ -225,19 +234,21 @@ module.exports = Backbone.View.extend({
       theme: 'prose-bright'
     });
 
-    this.listenTo(this.codeMirrorInstances.rawEditor, 'blur', (function(codeMirror) {
-      try {
-        var rawValue = jsyaml.safeLoad(codeMirror.getValue());
-      } catch(err) {
-        console.log("Error parsing CodeMirror editor text");
-        console.log(err);
-      }
-      if (rawValue) {
-        var metadata = this.model.get('metadata');
-        this.model.set('metadata', _.extend(metadata, rawValue));
-        this.view.makeDirty();
-      }
-    }).bind(this));
+    this.codeMirrorInstances.rawEditor.on('blur', this.onRawEditorBlur.bind(this));
+  },
+
+  onRawEditorBlur: function(codeMirror) {
+    try {
+      var rawValue = jsyaml.safeLoad(codeMirror.getValue());
+    } catch(err) {
+      console.log("Error parsing CodeMirror editor text");
+      console.log(err);
+    }
+    if (rawValue) {
+      var metadata = this.model.get('metadata');
+      this.model.set('metadata', _.extend(metadata, rawValue));
+      this.view.makeDirty();
+    }
   },
 
   getValue: function() {

@@ -436,6 +436,9 @@ module.exports = Backbone.View.extend({
       matchBrackets: true,
       dragDrop: false,
       theme: 'prose-bright',
+      indentUnit: 2,
+      smartIndent: true,
+      indentWithTabs: false,
       showInvisibles: false
     });
 
@@ -458,11 +461,11 @@ module.exports = Backbone.View.extend({
     // Monitor the current selection and apply
     // an active class to any snippet links
     if (lang === 'gfm') {
-      this.listenTo(this.editor, 'cursorActivity', this.cursor);
+      this.editor.on('cursorActivity', this.cursor.bind(this));
     }
 
-    this.listenTo(this.editor, 'change', this.makeDirty, this);
-    this.listenTo(this.editor, 'focus', this.focus, this);
+    this.editor.on('change', this.makeDirty.bind(this));
+    this.editor.on('focus', this.focus.bind(this));
 
     this.refreshCodeMirror();
 

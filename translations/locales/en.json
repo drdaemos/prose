@@ -16,7 +16,8 @@
         "about": "About",
         "develop": "Developers",
         "logout": "Logout",
-        "language": "Language"
+        "language": "Language",
+        "goback": "Go back"
     },
     "toolbar": {
         "heading": "Heading",

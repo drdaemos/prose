@@ -32,6 +32,9 @@ var paths = {
   ],
   css: [
     'style/**/*.scss',
+  ],
+  styleimage: [
+    'style/**/*.png',
   ]
 };
 
@@ -79,6 +82,12 @@ gulp.task('css', function () {
   return gulp.src('./style/style.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(rename('prose.css'))
+    .pipe(gulp.dest(dist));
+});
+
+// Parse stylesheet
+gulp.task('styleimage', function () {
+  return gulp.src(paths.styleimage)
     .pipe(gulp.dest(dist));
 });
 
@@ -139,12 +148,13 @@ gulp.task('build-app', ['templates', 'oauth'], function() {
 });
 
 // Watch for changes in `app` scripts.
-gulp.task('watch', ['build-app', 'build-tests', 'css'], function() {
+gulp.task('watch', ['build-app', 'build-tests', 'css', 'styleimage'], function() {
   // Watch any `.js` file under `app` folder.
   gulp.watch(paths.app, ['build-app', 'build-tests']);
   gulp.watch(paths.test, ['build-tests']);
   gulp.watch(paths.templates, ['build-app']);
   gulp.watch(paths.css, ['css']);
+  gulp.watch(paths.styleimage, ['styleimage']);
 });
 
 var testTask = shell.task([
@@ -159,7 +169,7 @@ gulp.task('test-ci', ['test'], function() {
 });
 
 // Build site, tests
-gulp.task('build', ['build-tests', 'build-app', 'css']);
+gulp.task('build', ['build-tests', 'build-app', 'css', 'styleimage']);
 gulp.task('default', ['build']);
 
 // Minify build

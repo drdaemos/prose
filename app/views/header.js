@@ -8,6 +8,7 @@ module.exports = Backbone.View.extend({
   template: templates.header,
 
   events: {
+    'click .go-back': 'goBack',
     'focus input': 'checkPlaceholder',
     'change input[data-mode="path"]': 'updatePath',
     'change input[data-mode="title"]': 'updateTitle'
@@ -84,6 +85,10 @@ module.exports = Backbone.View.extend({
     this.file.set('path', value);
     this.trigger('makeDirty');
     return false;
+  },
+
+  goBack: function(e) {
+    history.back();
   },
 
   updateTitle: function(e) {

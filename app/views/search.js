@@ -49,6 +49,11 @@ module.exports = Backbone.View.extend({
     }
   },
 
+  clear: function() {
+    this.input.val('');
+    this.trigger('search');
+  },
+
   search: function() {
     var searchstr = this.input ? this.input.val().toLowerCase() : '';
     return this.model.filter(function(model) {

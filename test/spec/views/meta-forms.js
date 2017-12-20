@@ -1,6 +1,6 @@
 var $ = require('jquery');
 var _ = require('underscore');
-var chosen = require('chosen-js');
+var select2 = require('select2')();
 
 var Checkbox = require('../../../app/views/meta/checkbox');
 var TextForm = require('../../../app/views/meta/text');
@@ -124,7 +124,7 @@ describe('Metadata form elements', function() {
       ];
       var select = new Select({data: data});
       $('#meta').append(select.render());
-      $('.chzn-select').chosen();
+      $('.chzn-select').select2();
 
       var $select = select.$form;
       $select[0].selectedIndex=2;
@@ -140,10 +140,10 @@ describe('Metadata form elements', function() {
       ];
       var select = new Select({data: data});
       $('#meta').append(select.render());
-      $('.chzn-select').chosen();
+      $('.chzn-select').select2();
       select.setValue('jon');
       expect(select.getValue()).to.equal('jon');
-      expect($('.chzn-single').find('span').text()).to.equal('Jon');
+      expect($('.chosen-single').find('span').text()).to.equal('Jon');
     });
 
     it('adds additional, selected element when needed', function () {
@@ -154,10 +154,10 @@ describe('Metadata form elements', function() {
       ];
       var select = new Select({data: data});
       $('#meta').append(select.render());
-      $('.chzn-select').chosen();
+      $('.chzn-select').select2();
       select.setValue('WUT');
       expect(select.getValue()).to.equal('WUT');
-      expect($('.chzn-single').find('span').text()).to.equal('WUT');
+      expect($('.chosen-single').find('span').text()).to.equal('WUT');
     });
 
     it('shows first item in select, if given an array', function () {
@@ -168,10 +168,10 @@ describe('Metadata form elements', function() {
       ];
       var select = new Select({data: data});
       $('#meta').append(select.render());
-      $('.chzn-select').chosen();
+      $('.chzn-select').select2();
       select.setValue(['sre', 'jon']);
       expect(select.getValue()).to.equal('sre');
-      expect($('.chzn-single').find('span').text()).to.equal('Sre');
+      expect($('.chosen-single').find('span').text()).to.equal('Sre');
     });
 
     it('reads values from a multiselect element', function() {
@@ -182,7 +182,7 @@ describe('Metadata form elements', function() {
       ];
       var multiselect = new Multiselect({data: data});
       $('#meta').append(multiselect.render());
-      $('.chzn-select').chosen();
+      $('.chzn-select').select2();
 
       var $select = multiselect.$form;
       $select[0].selectedIndex=1;
@@ -198,9 +198,9 @@ describe('Metadata form elements', function() {
       ];
       var multiselect = new Multiselect({data: data});
       $('#meta').append(multiselect.render());
-      $('.chzn-select').chosen();
+      $('.chzn-select').select2();
       multiselect.setValue([null, false, undefined]);
-      expect($('.chzn-choices').find('li.search-choice').length).to.equal(0);
+      expect($('.chosen-choices').find('li.search-choice').length).to.equal(0);
 
       // expect response to be an array
       expect(multiselect.getValue()).to.equal('');
@@ -214,7 +214,7 @@ describe('Metadata form elements', function() {
       ];
       var multiselect = new Multiselect({data: data});
       $('#meta').append(multiselect.render());
-      $('.chzn-select').chosen();
+      $('.chzn-select').select2();
       multiselect.setValue('sre');
       expect(multiselect.getValue()).to.deep.equal(['sre']);
       multiselect.setValue(['sre', 'jon']);
@@ -229,11 +229,11 @@ describe('Metadata form elements', function() {
       ];
       var multiselect = new Multiselect({data: data});
       $('#meta').append(multiselect.render());
-      $('.chzn-select').chosen();
+      $('.chzn-select').select2();
       multiselect.setValue(['dick', 'van', 'dyke']);
       expect(multiselect.getValue()).to.deep.equal(['dick', 'van', 'dyke']);
-      expect($('.chzn-choices').find('li.search-choice').length).to.equal(3);
-      expect($('.chzn-choices').find('li.search-choice').eq(2).find('span').text()).to.equal('dyke');
+      expect($('.chosen-choices').find('li.search-choice').length).to.equal(3);
+      expect($('.chosen-choices').find('li.search-choice').eq(2).find('span').text()).to.equal('dyke');
     });
   });
 
@@ -246,7 +246,7 @@ describe('Metadata form elements', function() {
     data.field.value = 'bar';
     var select = new Select({ data: data });
     $('#meta').append(select.render());
-    $('.chzn-select').chosen();
+    $('.chzn-select').select2();
     expect(select.getValue()).to.equal('bar');
   });
 
@@ -259,7 +259,7 @@ describe('Metadata form elements', function() {
     data.field.value = 'bar';
     var multiselect = new Multiselect({ data: data });
     $('#meta').append(multiselect.render());
-    $('.chzn-select').chosen();
+    $('.chzn-select').select2();
     expect(multiselect.getValue()).to.deep.equal(['bar']);
   });
 });
