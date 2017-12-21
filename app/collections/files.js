@@ -44,7 +44,7 @@ module.exports = Backbone.Collection.extend({
   },
 
   initialize: function(models, options) {
-    // _.bindAll(this);
+    // _.bindAll.apply(_, [this].concat(_.functions(this)));
 
     this.repo = options.repo;
     this.branch = options.branch;

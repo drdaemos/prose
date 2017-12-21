@@ -3,7 +3,7 @@ var Backbone = require('backbone');
 
 module.exports = Backbone.Model.extend({
   initialize: function(attributes, options) {
-    _.bindAll(this);
+    _.bindAll.apply(_, [this].concat(_.functions(this)));
 
     this.repo = attributes.repo;
   },

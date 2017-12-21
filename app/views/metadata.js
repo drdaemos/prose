@@ -43,7 +43,7 @@ module.exports = Backbone.View.extend({
   // titleAsHeading is true when the filetype is markdown,
   // and when there exists a meta field called title.
   initialize: function(options) {
-    _.bindAll(this);
+    _.bindAll.apply(_, [this].concat(_.functions(this)));
 
     this.model = options.model;
     this.titleAsHeading = options.titleAsHeading;

@@ -45,25 +45,38 @@ module.exports = Backbone.View.extend({
         });
       }
 
-      // if (config.reference) {
-      //   $.ajax({
-      //     cache: true,
-      //     method: 'GET',
-      //     url: config.reference,
-      //     success: function(refs) {
-      //       if (refs instanceof XMLDocument) {
-      //         var nodes = [].slice.call(refs.children[0].children);
-      //         self.linksReference = nodes.reduce(function(memo, item, key) {
-      //           memo[item.tagName] = {
-      //             'title': item.getElementsByTagName('title')[0].innerHTML,
-      //             'link': item.getElementsByTagName('link')[0].innerHTML,
-      //           };
-      //           return memo;
-      //         }, {});
-      //       }
-      //     }
-      //   });
-      // }
+      if (config.references) {
+        var path = this.file.get('path');
+        var urlKey = null;
+        for (var key in config.references) {
+          // starts with key
+          if (path && path.indexOf(key) === 0) {
+            urlKey = key;
+            break;
+          }
+        }
+
+        if (urlKey) {
+          var url = config.references[urlKey];
+          $.ajax({
+            cache: true,
+            method: 'GET',
+            url: url,
+            success: function(refs) {
+              if (refs instanceof XMLDocument) {
+                var nodes = [].slice.call(refs.children[0].children);
+                self.linksReference = nodes.reduce(function(memo, item, key) {
+                  memo[item.tagName] = {
+                    'title': item.getElementsByTagName('title')[0].innerHTML,
+                    'link': item.getElementsByTagName('link')[0].innerHTML,
+                  };
+                  return memo;
+                }, {});
+              }
+            }
+          });
+        }
+      }
 
       if (config.relativeLinks) {
         $.ajax({

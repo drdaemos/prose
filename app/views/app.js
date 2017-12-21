@@ -21,7 +21,7 @@ module.exports = Backbone.View.extend({
   },
   
   initialize: function(options) {
-    _.bindAll(this);
+    _.bindAll.apply(_, [this].concat(_.functions(this)));
 
     key('j, k, enter, o', (function(e, handler) {
       if (this.$el.find('.listing')[0]) {

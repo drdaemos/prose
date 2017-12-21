@@ -9,7 +9,7 @@ module.exports = Backbone.View.extend({
   queue: 0,
 
   initialize: function() {
-    _.bindAll(this);
+    _.bindAll.apply(_, [this].concat(_.functions(this)));
   },
 
   start: function(message) {

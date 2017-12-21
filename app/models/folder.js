@@ -6,7 +6,7 @@ module.exports = Backbone.Model.extend({
   idAttribute: 'path',
 
   initialize: function(attributes, options) {
-    _.bindAll(this);
+    _.bindAll.apply(_, [this].concat(_.functions(this)));
 
     this.branch = attributes.branch;
     this.collection = attributes.collection;

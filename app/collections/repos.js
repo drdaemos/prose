@@ -12,7 +12,7 @@ module.exports = Backbone.Collection.extend({
   model: Repo,
 
   initialize: function(models, options) {
-    // _.bindAll(this);
+    // _.bindAll.apply(_, [this].concat(_.functions(this)));
 
     this.user = options.user;
 
