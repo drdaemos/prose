@@ -55,8 +55,9 @@ module.exports = Backbone.View.extend({
     this.$el.find('select').html(frag);
 
     var router = this.router;
-    this.$el.find('.chzn-select').select2().change(function() {
-      router.navigate($(this).val(), true);
+    this.$el.find('.chzn-select').select2().change(function(event) {
+      var target = $(event.target);
+      router.navigate(target.val(), true);
     });
 
     this.sidebar.open();

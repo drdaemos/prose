@@ -209,8 +209,8 @@ module.exports = Backbone.View.extend({
             if (self.relativeLinks) {
               $('.chzn-select', $dialog).select2().change(function() {
                 // $('.chosen-single span').text('Insert a local link.');
-
-                var parts = $(this).val().split(',');
+                var target = $(event.target);
+                var parts = target.val().split(',');
                 $('input[name=href]', $dialog).val(parts[0]);
                 $('input[name=text]', $dialog).val(parts[1]);
               });
@@ -272,10 +272,11 @@ module.exports = Backbone.View.extend({
             $('#js-reference-listing').prop('selectedIndex', -1);
             $('#js-reference-listing').select2();
             $('#js-reference-listing').on('change', function(event, params) {
-              var ref = self.linksReference[params.selected];
+              var target = $(event.target);
+              var ref = self.linksReference[target.val()];
               $('input[name=text]', $dialog).val(ref.title);
               $('input[name=href]', $dialog).val(ref.link);
-              $('input[name=id]', $dialog).val(params.selected);
+              $('input[name=id]', $dialog).val(target.val());
             });
           break;
           case 'media':
