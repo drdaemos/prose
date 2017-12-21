@@ -202,13 +202,15 @@ module.exports = Backbone.View.extend({
   },
 
   renderSelect: function() {
-    var select = this.$el.find('.chzn-select');
-    // Attach a change event listener
-    select.select2({
-      tags: true,
-      width: '90%'
+    var self = this;
+    this.$el.find('.chzn-select').each(function() {
+      $(this).select2({
+        placeholder: this.getAttribute('data-placeholder'),
+        tags: true,
+        width: '90%'
+      });
+      $(this).on('change', self.updateModel.bind(self));    
     });
-    select.on('change', this.updateModel.bind(this));
   },
 
   // Responsible for rendering the raw metadata element
@@ -244,7 +246,7 @@ module.exports = Backbone.View.extend({
       console.log("Error parsing CodeMirror editor text");
       console.log(err);
     }
-    if (rawValue) {
+    if (rawValue && _.isObject(rawValue)) {
       var metadata = this.model.get('metadata');
       this.model.set('metadata', _.extend(metadata, rawValue));
       this.view.makeDirty();
@@ -288,7 +290,9 @@ module.exports = Backbone.View.extend({
     // Load any data coming from not defined raw yaml front matter.
     if (this.codeMirrorInstances.rawEditor) {
       try {
-        metadata = _.merge(metadata, jsyaml.safeLoad(this.codeMirrorInstances.rawEditor.getValue()) || {});
+        var rawData = jsyaml.safeLoad(this.codeMirrorInstances.rawEditor.getValue())
+        var value = rawData && _.isObject(rawData) ? rawData : {}
+        metadata = _.merge(metadata, value);
       } catch (err) {
         console.log("Error parsing not defined raw yaml front matter");
         console.log(err);

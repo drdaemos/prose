@@ -973,6 +973,12 @@ module.exports = Backbone.View.extend({
     this.updateSaveState(label, 'save');
   },
 
+  makePristine: function() {
+    this.dirty = false;
+    var label = t('actions.change.noChange');
+    this.updateSaveState(label, '');
+  },
+
   settings: function() {
     this.contentMode();
     this.sidebar.mode('settings');
@@ -1008,13 +1014,16 @@ module.exports = Backbone.View.extend({
   },
 
   cancel: function() {
-    // Close the sidebar and return the
-    // active nav item to the current file mode.
-    this.sidebar.close();
-    this.nav.active(this.mode);
+    // Restore the previous version of the content
+    this.updateEditorAndMetadata(this.model.get('previous'))
 
-    // Return back to old mode.
-    this.contentMode();
+    // // Close the sidebar and return the
+    // // active nav item to the current file mode.
+    // this.sidebar.close();
+    // this.nav.active(this.mode);
+
+    // // Return back to old mode.
+    // this.contentMode();
   },
 
   refreshCodeMirror: function() {
@@ -1433,14 +1442,14 @@ module.exports = Backbone.View.extend({
   },
 
   updateEditorAndMetadata: function(mergedContent) {
-    this.dirty = false;
-    this.clearStashForPath(this.absoluteFilepath());
     this.edit();
-
     var fileModel = this.model.parseContent(mergedContent);
 
     this.editor.setValue(fileModel.content);
     this.model.set('metadata', fileModel.metadata);
+
+    this.clearStashForPath(this.absoluteFilepath());
+    this.makePristine();
 
     _.defer((function(){
       this.refreshCodeMirror();
