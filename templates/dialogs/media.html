@@ -21,7 +21,9 @@
   <% if (assetsDirectory) { %>
     <div class='col col-last fl media-listing'>
       <label><%= t('dialogs.media.choose') %></label>
-      <ul id='media'></ul>
+      <select id="media">
+        <option value="">Select an image</option>
+      </select>
       <small class='caption deemphasize'><%= t('dialogs.media.helpMedia') %></small>
     </div>
   <% } %>

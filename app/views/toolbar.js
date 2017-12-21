@@ -587,31 +587,42 @@ module.exports = Backbone.View.extend({
   renderMedia: function(data, back) {
     var self = this;
     var $media = this.$el.find('#media');
-    var tmpl = _(templates.dialogs.mediadirectory).template();
 
     // Reset some stuff
-    $media.empty();
-
-    if (back && (back.join() !== this.assetsDirectory)) {
-      var link = back.slice(0, back.length - 1).join('/');
-      $media.append('<li class="directory back"><a href="' + link + '"><span class="ico fl small inline back"></span>Back</a></li>');
-    }
-
-    data.each(function(d) {
-      var parts = d.get('path').split('/');
-      var path = parts.slice(0, parts.length - 1).join('/');
-
-      $media.append(tmpl({
-        name: d.get('name'),
-        type: d.get('type'),
-        path: path + '/' + encodeURIComponent(d.get('name')),
-        isMedia: util.isMedia(d.get('name').split('.').pop())
-      }));
+    // $media.empty();
+    
+    $media.select2({
+        placeholder: 'Select an image',
+        data: data.map(function(item) {
+          return {
+            id: item.get('path'),
+            text: item.get('path')
+          }
+        })
     });
 
-    $('.asset a', $media).on('click', function(e) {
-      var href = $(this).attr('href');
-      var alt = util.trim($(this).text());
+    // this is not working anyway
+    // if (back && (back.join() !== this.assetsDirectory)) {
+    //   var link = back.slice(0, back.length - 1).join('/');
+    //   $media.append('<li class="directory back"><a href="' + link + '"><span class="ico fl small inline back"></span>Back</a></li>');
+    // }
+
+    // data.each(function(d) {
+    //   var parts = d.get('path').split('/');
+    //   var path = parts.slice(0, parts.length - 1).join('/');
+
+    //   $media.append(tmpl({
+    //     name: d.get('name'),
+    //     type: d.get('type'),
+    //     path: path + '/' + encodeURIComponent(d.get('name')),
+    //     isMedia: util.isMedia(d.get('name').split('.').pop())
+    //   }));
+    // });
+    
+    $media.change(function(event) {
+      var target = $(event.target);
+      var href = target.val();
+      var alt = href.split('/').slice(-1).join('');
 
       if (util.isImage(href.split('.').pop())) {
         self.$el.find('input[name="url"]').val(href);
@@ -620,7 +631,20 @@ module.exports = Backbone.View.extend({
         self.view.editor.replaceSelection(href);
         self.view.editor.focus();
       }
-      return false;
     });
+
+    // $('.asset a', $media).on('click', function(e) {
+    //   var href = $(this).attr('href');
+    //   var alt = util.trim($(this).text());
+
+    //   if (util.isImage(href.split('.').pop())) {
+    //     self.$el.find('input[name="url"]').val(href);
+    //     self.$el.find('input[name="alt"]').val(alt);
+    //   } else {
+    //     self.view.editor.replaceSelection(href);
+    //     self.view.editor.focus();
+    //   }
+    //   return false;
+    // });
   }
 });
