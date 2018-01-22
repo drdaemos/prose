@@ -59,9 +59,9 @@ module.exports = Backbone.Model.extend({
       'writable': permissions ? permissions.push : false
     });
 
-    if (this.get('markdown')) {
-      this.set('metadata', this.generateDefaultMetadata());
-    }
+    // if (this.get('markdown')) {
+    //   this.set('metadata', this.generateDefaultMetadata());
+    // }
   },
 
   get: function(attr) {

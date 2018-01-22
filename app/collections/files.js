@@ -338,7 +338,8 @@ module.exports = Backbone.Collection.extend({
 
     return {
       "CURRENT_DATETIME": (new Date()).format('Y-m-d H:i O'),
-      "CURRENT_USER": user
+      "CURRENT_USER": user,
+      "UNIQUE_IDENTIFIER": util.generateUuid()
     };
   }
 });
