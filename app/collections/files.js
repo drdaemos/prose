@@ -43,6 +43,10 @@ module.exports = Backbone.Collection.extend({
     }
   },
 
+  modelId: function(attrs) {
+    return attrs.path;
+  },
+
   initialize: function(models, options) {
     // _.bindAll.apply(_, [this].concat(_.functions(this)));
 
